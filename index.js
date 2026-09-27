@@ -558,17 +558,19 @@ function updateTeamMemberInline(memberId) {
 window.updateTeamMemberInline = updateTeamMemberInline;
 
 function addTeamMember() {
-    const name = document.getElementById('tm-name')?.value.trim();
-    const role = document.getElementById('tm-role')?.value.trim();
-    const insta = document.getElementById('tm-insta')?.value.trim();
-    const portfolio = document.getElementById('tm-portfolio')?.value.trim();
+    const name = document.getElementById('nm-name')?.value.trim();
+    const role = document.getElementById('nm-role')?.value.trim();
+    const insta = document.getElementById('nm-instagram')?.value.trim();
+    const portfolio = document.getElementById('nm-portfolio')?.value.trim();
 
     if (!name || !role) { showToast("Name and role are required."); return; }
+
+    if (!Array.isArray(VORTEX_STATE.team)) VORTEX_STATE.team = [];
 
     VORTEX_STATE.team.push({ id: 'tm_' + Date.now(), name, role, insta, portfolio });
     syncStateToDatabase();
 
-    ['tm-name','tm-role','tm-insta','tm-portfolio'].forEach(id => {
+    ['nm-name','nm-role','nm-instagram','nm-portfolio'].forEach(id => {
         const el = document.getElementById(id);
         if (el) el.value = '';
     });
