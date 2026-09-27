@@ -1,6 +1,6 @@
 {
   "announcement": "We Are Hiring! please contact us on discord.",
-  "downloads": "1700+",
+  "downloads": "5200",
   "maintenanceMode": false,
   "projects": [
     {
@@ -14,16 +14,6 @@
       "type": "Mobile & Web App"
     },
     {
-      "desc": "A highly responsive search aggregator featuring instant query results, movie reviews, and metadata visualization engines.",
-      "id": "wavemirror",
-      "link": "https://wavemirror.vercel.app",
-      "logo": "assets/logo.png",
-      "name": "WaveMirror",
-      "status": "online",
-      "tech": "HTML, CSS, Vanilla JS",
-      "type": "Web Aggregator"
-    },
-    {
       "desc": "A low-latency, secure real-time messaging application designed with clean UI aesthetics and modern websocket database pipelines.",
       "id": "onyx",
       "link": "https://onyxchat.de5.net",
@@ -35,13 +25,6 @@
     }
   ],
   "team": [
-    {
-      "id": "tm_aarav",
-      "insta": "aarav_sharma_sui",
-      "name": "Aarav Sharma",
-      "portfolio": "aaravsharma.netlify.app",
-      "role": "Co-Founder // UI/UX Designer"
-    },
     {
       "id": "tm_akshansh",
       "insta": "akshansh_6969",
@@ -62,6 +45,13 @@
       "name": "Arshh",
       "portfolio": "https://arshit-gautam.vercel.app/",
       "role": "Ui/Ux/frontend"
+    },
+    {
+      "id": "tm_1790512044645",
+      "insta": "aarav_sharma_sui",
+      "name": "Aarav Sharma",
+      "portfolio": "aaravsharma.octadevs.fun",
+      "role": "Co-Founder"
     }
   ]
 }
