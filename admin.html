@@ -52,28 +52,28 @@
 
                 <nav class="admin-nav">
                     <span class="admin-nav-group-label">Overview</span>
-                    <button class="admin-nav-item active" id="tab-btn-overview" onclick="switchAdminTab('overview')">
+                    <button class="admin-nav-item active" id="tab-btn-overview" onclick="switchAdminTab('overview')" style="--i:1;">
                         <i data-lucide="layout-dashboard"></i> Dashboard
                     </button>
 
                     <span class="admin-nav-group-label">Content</span>
-                    <button class="admin-nav-item" id="tab-btn-announcement" onclick="switchAdminTab('announcement')">
+                    <button class="admin-nav-item" id="tab-btn-announcement" onclick="switchAdminTab('announcement')" style="--i:2;">
                         <i data-lucide="megaphone"></i> Announcement
                     </button>
-                    <button class="admin-nav-item" id="tab-btn-projects" onclick="switchAdminTab('projects')">
+                    <button class="admin-nav-item" id="tab-btn-projects" onclick="switchAdminTab('projects')" style="--i:3;">
                         <i data-lucide="folder-open"></i> Projects
                     </button>
-                    <button class="admin-nav-item" id="tab-btn-team" onclick="switchAdminTab('team')">
+                    <button class="admin-nav-item" id="tab-btn-team" onclick="switchAdminTab('team')" style="--i:4;">
                         <i data-lucide="users"></i> Team
                     </button>
 
                     <span class="admin-nav-group-label">Site</span>
-                    <button class="admin-nav-item" id="tab-btn-settings" onclick="switchAdminTab('settings')">
+                    <button class="admin-nav-item" id="tab-btn-settings" onclick="switchAdminTab('settings')" style="--i:5;">
                         <i data-lucide="settings"></i> Settings
                     </button>
 
                     <span class="admin-nav-group-label">Session</span>
-                    <button class="admin-nav-item" onclick="lockAdminPanel()">
+                    <button class="admin-nav-item" onclick="lockAdminPanel()" style="--i:6;">
                         <i data-lucide="log-out"></i> Sign out
                     </button>
                 </nav>
@@ -197,7 +197,8 @@
                         <div class="admin-card">
                             <div class="admin-card-title"><i data-lucide="folder-open"></i> Existing Projects</div>
                             <div id="admin-projects-editor-grid">
-                                <p style="color:var(--text-dim);font-size:0.8125rem;">Loading…</p>
+                                <div class="admin-skeleton"></div>
+                                <div class="admin-skeleton"></div>
                             </div>
                         </div>
                     </div>
@@ -241,7 +242,8 @@
                         <div class="admin-card">
                             <div class="admin-card-title"><i data-lucide="users"></i> Current Team</div>
                             <div id="admin-team-list">
-                                <p style="color:var(--text-dim);font-size:0.8125rem;">Loading…</p>
+                                <div class="admin-skeleton"></div>
+                                <div class="admin-skeleton"></div>
                             </div>
                         </div>
                     </div>

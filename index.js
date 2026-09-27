@@ -414,17 +414,27 @@ function renderAdminProjectsEditor() {
     if (!grid) return;
 
     grid.innerHTML = '';
-    (VORTEX_STATE.projects || []).forEach(proj => {
+    (VORTEX_STATE.projects || []).forEach((proj, i) => {
         const isOnline = proj.status === 'online';
 
         grid.innerHTML += `
-            <div class="admin-project-item">
+            <div class="admin-project-item" style="--i:${i};">
                 <div class="admin-project-item-info">
                     <div class="admin-project-item-name">${proj.name}</div>
                     <div class="admin-project-item-meta">${proj.type || ''} ${proj.tech ? '· ' + proj.tech : ''}</div>
                 </div>
-                <div style="display:flex;gap:8px;align-items:center;flex-shrink:0;">
-                    <div class="admin-toggle">
+                <div class="admin-project-fields">
+                    <div class="admin-input-group" style="margin-bottom:0;">
+                        <label class="admin-input-label">Name</label>
+                        <input type="text" class="admin-input" id="db-proj-name-${proj.id}" value="${proj.name || ''}">
+                    </div>
+                    <div class="admin-input-group" style="margin-bottom:0;">
+                        <label class="admin-input-label">URL</label>
+                        <input type="text" class="admin-input" id="db-proj-link-${proj.id}" value="${proj.link || ''}">
+                    </div>
+                </div>
+                <div class="admin-project-actions">
+                    <div class="admin-toggle" style="margin-bottom:0;">
                         <input type="checkbox" id="db-proj-status-${proj.id}" ${isOnline ? 'checked' : ''}
                             title="Mark as online">
                         <label for="db-proj-status-${proj.id}" class="admin-toggle-label">Live</label>
@@ -437,7 +447,7 @@ function renderAdminProjectsEditor() {
     });
 
     if (!VORTEX_STATE.projects || VORTEX_STATE.projects.length === 0) {
-        grid.innerHTML = `<p style="font-size:0.875rem;color:var(--text-muted);padding:4px 0;">No projects yet.</p>`;
+        grid.innerHTML = `<div class="admin-empty">No projects yet — add one above.</div>`;
     }
 
     refreshIcons();
@@ -451,14 +461,14 @@ function renderAdminTeamList() {
 
     list.innerHTML = '';
     if (!VORTEX_STATE.team || VORTEX_STATE.team.length === 0) {
-        list.innerHTML = `<p style="font-size:0.875rem;color:var(--text-muted);">No team members yet.</p>`;
+        list.innerHTML = `<div class="admin-empty">No team members yet — add one above.</div>`;
         return;
     }
 
-    VORTEX_STATE.team.forEach(member => {
+    VORTEX_STATE.team.forEach((member, i) => {
         const initial = member.name ? member.name.charAt(0).toUpperCase() : '?';
         list.innerHTML += `
-            <div class="admin-member-card">
+            <div class="admin-member-card" style="--i:${i};">
                 <div class="admin-member-avatar">${initial}</div>
                 <div class="admin-member-fields">
                     <div class="admin-input-group" style="margin-bottom:0;">
@@ -606,6 +616,9 @@ async function verifyAdmin() {
         logToDashboard("Signed in successfully.");
         showToast("Welcome back.");
 
+        // Let the dashboard paint, then run the counters
+        requestAnimationFrame(() => animateStatNumbers());
+
         const geminiKey = document.getElementById('admin-gemini-key');
         if (geminiKey) {
             const systemConfig = window.VORTEXAPPS_CONFIG || {};
@@ -613,6 +626,15 @@ async function verifyAdmin() {
         }
     } else {
         showToast("Incorrect password.");
+
+        const card = document.querySelector('.admin-auth-card');
+        if (card) {
+            card.classList.remove('shake');
+            void card.offsetWidth;
+            card.classList.add('shake');
+        }
+        passInput.value = '';
+        passInput.focus();
     }
 }
 window.verifyAdmin = verifyAdmin;
@@ -634,6 +656,9 @@ function checkAdminAuthSession() {
         const dashboard = document.getElementById('admin-dashboard-panel');
         if (dashboard) dashboard.classList.add('active');
         logToDashboard("Session restored.");
+
+        // Counters need the stats rendered first, so wait a beat
+        setTimeout(() => animateStatNumbers(), 180);
     }
 }
 
@@ -643,11 +668,55 @@ function switchAdminTab(tabId) {
     document.querySelectorAll('.admin-nav-item').forEach(el => el.classList.remove('active'));
 
     const tab = document.getElementById('admin-tab-' + tabId);
-    if (tab) tab.classList.add('active');
+    if (tab) {
+        tab.classList.add('active');
+        replayEntrance(tab);
+    }
 
     const btn = document.getElementById('tab-btn-' + tabId);
     if (btn) btn.classList.add('active');
+
+    if (tabId === 'overview') animateStatNumbers();
 }
+
+/*  Restart the CSS entrance animations on a freshly shown tab. Toggling the
+    class alone won't replay them — the animation has already run once — so we
+    drop the animation, force a reflow, then hand it back. */
+function replayEntrance(tab) {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const targets = tab.querySelectorAll('.admin-tab-content > *, .admin-topbar > div');
+    targets.forEach(el => { el.style.animation = 'none'; });
+    void tab.offsetWidth;
+    targets.forEach(el => { el.style.animation = ''; });
+}
+
+/*  Count a stat up to its final value. Stats are plain text nodes written by
+    renderAdminOverviewStats(), so we read the number back out and re-render it. */
+function animateStatNumbers() {
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    document.querySelectorAll('.admin-stat-num').forEach(el => {
+        const target = parseInt(String(el.textContent).replace(/[^0-9]/g, ''), 10);
+        if (!Number.isFinite(target)) return;
+        if (reduce || target === 0) { el.textContent = String(target); return; }
+
+        const duration = 900;
+        const start = performance.now();
+
+        const step = now => {
+            const p = Math.min((now - start) / duration, 1);
+            // easeOutExpo — fast start, long settle
+            const eased = p === 1 ? 1 : 1 - Math.pow(2, -10 * p);
+            el.textContent = String(Math.round(target * eased));
+            if (p < 1) requestAnimationFrame(step);
+        };
+
+        el.textContent = '0';
+        requestAnimationFrame(step);
+    });
+}
+window.animateStatNumbers = animateStatNumbers;
 window.switchAdminTab = switchAdminTab;
 
 function updateLocalGeminiKey() {
