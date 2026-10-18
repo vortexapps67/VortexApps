@@ -50,10 +50,8 @@ p { text-wrap: pretty; }
    brand left · links + glass "reach out" pill right
    -------------------------------------------------------------------------- */
 #main-nav {
-    position: fixed;
+    position: sticky;
     top: 0;
-    left: 0;
-    right: 0;
     z-index: 99990;
     height: calc(var(--nav-h) + 4px);
     background: color-mix(in srgb, var(--bg) 80%, transparent);

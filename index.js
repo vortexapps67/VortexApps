@@ -292,22 +292,14 @@ function renderDownloads() {
 function renderAnnouncement() {
     const bar = document.getElementById('announcement-bar');
     const text = document.getElementById('announcement-text');
-    const nav = document.getElementById('main-nav');
 
     if (!bar) return;
 
     if (VORTEX_STATE.announcement && VORTEX_STATE.announcement.trim()) {
         bar.style.display = 'block';
         if (text) text.textContent = VORTEX_STATE.announcement;
-
-        // Push nav below the bar
-        const barH = bar.offsetHeight;
-        if (nav) nav.style.top = barH + 'px';
-        document.body.style.paddingTop = (barH + 60) + 'px'; // bar + nav height
     } else {
         bar.style.display = 'none';
-        if (nav) nav.style.top = '0px';
-        document.body.style.paddingTop = '60px'; // nav height only
     }
 }
 

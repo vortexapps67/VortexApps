@@ -247,11 +247,6 @@ body::after {
    ========================================================================== */
 #announcement-bar {
     display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 99989;
     background: var(--accent);
     color: #fff;
     text-align: center;
@@ -277,10 +272,6 @@ body::after {
     border-bottom: 1px solid transparent;
     transition: var(--transition-md);
     box-shadow: 0 1px 0 rgba(255,255,255,0.04) inset;
-}
-
-#announcement-bar ~ #main-nav {
-    top: 40px;
 }
 
 .nav-inner {
@@ -485,7 +476,7 @@ body::after {
     padding: 0 clamp(20px, 4vw, 32px);
 }
 
-main { padding-top: calc(var(--nav-h) + 40px); }
+main { padding-top: 24px; }
 
 .section    { padding: clamp(96px, 14vw, 180px) 0; }
 .section-sm { padding: clamp(64px, 10vw, 112px) 0; }
