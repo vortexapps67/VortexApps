@@ -232,6 +232,7 @@ p { text-wrap: pretty; }
     margin-bottom: clamp(24px, 3vw, 40px);
     max-width: min(1100px, 94vw);
     text-wrap: balance;
+    color: var(--accent-hover);
 }
 
 /* Inner pages — refined display, not the giant wordmark */
@@ -245,12 +246,13 @@ p { text-wrap: pretty; }
     letter-spacing: var(--tr-display);
 }
 
-/* Gradient wordmark treatment on the accent phrase */
+/* Headline renders as a solid accent color. Per-char background-clip gradients
+   were the source of repeated rendering issues (invisible/scrambled letters);
+   solid color is bulletproof across browsers and GPUs. */
 .hero h1 .accent-word {
-    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-hover) 45%, #C9BCFD 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
+    background: none;
+    background-clip: initial;
+    -webkit-text-fill-color: initial;
     display: inline-block;
 }
 
@@ -579,18 +581,6 @@ html.theme-fade body { animation: theme-pulse 420ms ease; }
 }
 .hero:not(.page-hero) h1 .wm-char {
     display: inline-block;
-    will-change: transform;
-    /* Each char carries its OWN gradient: the ancestor's background-clip:text
-       cannot paint into these composited layers (will-change / transform),
-       which made the whole headline invisible. JS overrides background-size
-       and background-position so the sweep stays continuous across words. */
-    background-image: linear-gradient(135deg, var(--accent) 0%, var(--accent-hover) 45%, #C9BCFD 100%);
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
-    background-position: 0 0;
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
 }
 .hero:not(.page-hero) h1.wm-ready .wm-char {
     transform: translateY(115%);

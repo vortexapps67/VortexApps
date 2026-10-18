@@ -952,28 +952,6 @@ function toggleTheme(event) {
 window.toggleTheme = toggleTheme;
 
 // --- HERO WORDMARK — split headline into characters for the rise animation ---
-// Each char paints its own gradient slice (the ancestor's background-clip:text
-// can't reach into the chars' composited layers). This aligns the slices so
-// the sweep reads as one continuous gradient across the whole headline.
-function layoutWordmarkGradient(h1) {
-    if (!h1 || !h1.isConnected) return;
-    const w = h1.offsetWidth;
-    const h = h1.offsetHeight;
-    if (!w || !h) return;
-    h1.querySelectorAll('.wm-char').forEach(ch => {
-        ch.style.backgroundSize = w + 'px ' + h + 'px';
-        ch.style.backgroundPosition = (-ch.offsetLeft) + 'px ' + (-ch.offsetTop) + 'px';
-    });
-}
-
-let __wmResizeTimer = null;
-window.addEventListener('resize', () => {
-    clearTimeout(__wmResizeTimer);
-    __wmResizeTimer = setTimeout(() => {
-        document.querySelectorAll('.hero h1.wm-ready').forEach(layoutWordmarkGradient);
-    }, 150);
-});
-
 // If the page loads/animates while the window is hidden, the timeline freezes
 // and letters can be left stranded at mixed heights. Settle them once visible.
 document.addEventListener('visibilitychange', () => {
@@ -1021,30 +999,6 @@ function initHeroWordmark() {
         };
         splitNode(h1);
         h1.classList.add('wm-ready');
-        layoutWordmarkGradient(h1);
-
-        // Text metrics shift as web fonts arrive and text-wrap:balance reflows —
-        // any stale slice offset makes letters sample the wrong gradient colors
-        // (visible as a "scrambled" patchwork). Re-align on every signal we have.
-        const realign = () => layoutWordmarkGradient(h1);
-        try {
-            if (document.fonts && document.fonts.addEventListener) {
-                document.fonts.addEventListener('loadingdone', realign);
-            }
-        } catch (e) {}
-        if (document.fonts && document.fonts.ready) {
-            document.fonts.ready.then(realign).catch(() => {});
-        }
-        window.addEventListener('load', realign);
-        [800, 1800, 3500].forEach(ms => setTimeout(realign, ms));
-        // Word boxes move/resize whenever layout settles — the definitive trigger
-        try {
-            if (window.ResizeObserver) {
-                const ro = new ResizeObserver(() => layoutWordmarkGradient(h1));
-                ro.observe(h1);
-                h1.querySelectorAll('.wm-word').forEach(w => ro.observe(w));
-            }
-        } catch (e) {}
 
         if (reduceMotion) { h1.classList.add('wm-run'); return; }
         // Safety net — run even if the loader never dismisses
