@@ -1185,11 +1185,27 @@ function initLenis() {
             touchMultiplier: 1.4,
         });
         window.lenis = lenis; // exposed for debugging / third-party integration
-        const raf = (time) => {
-            lenis.raf(time);
-            requestAnimationFrame(raf);
+        // Hybrid loop: rAF for 60fps smoothness when visible, setTimeout
+        // keeps Lenis alive even in hidden/background tabs (rAF is paused
+        // there, which previously made smooth scroll appear "removed").
+        let lastTime = performance.now();
+        const tick = (time) => {
+            if (lenis) lenis.raf(time);
+            lastTime = time;
+            requestAnimationFrame(tick);
         };
-        requestAnimationFrame(raf);
+        requestAnimationFrame(tick);
+        const fallback = () => {
+            if (lenis) {
+                const now = performance.now();
+                if (now - lastTime > 100) {
+                    lenis.raf(now);
+                    lastTime = now;
+                }
+            }
+            setTimeout(fallback, 250);
+        };
+        setTimeout(fallback, 250);
     } catch (e) {
         lenis = null;
     }
