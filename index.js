@@ -1113,7 +1113,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     initLenis();
 
     // Dismiss loading screen after exactly 1 second (700ms delay + 300ms fade out)
-    setTimeout(dismissLoadingScreen, 700);
+    setTimeout(dismissLoadingScreen, 400);
 
     // Reveal animations — add 'visible' class when in viewport
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;

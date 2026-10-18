@@ -955,6 +955,33 @@ body {
     border-color: var(--accent);
 }
 
+/* ==========================================================================
+   MOBILE PERFORMANCE — disable heavy visuals + reduce blur on small screens
+   ========================================================================== */
+@media (max-width: 768px) {
+    /* Hide heavy ambient visuals */
+    .hero-orb { display: none !important; }
+    .hero-eye, .hero-particles, .hero-chips { display: none !important; }
+    .scroll-cue { display: none; }
+    /* Reduce blur on glass surfaces */
+    #main-nav { backdrop-filter: blur(8px) saturate(150%); -webkit-backdrop-filter: blur(8px) saturate(150%); }
+    .glass { backdrop-filter: blur(6px) saturate(150%); -webkit-backdrop-filter: blur(6px) saturate(150%); }
+    .project-card, .service-card, .value-card, .team-card,
+    .stats-row, .mii-banner, .cta-strip { backdrop-filter: blur(6px) saturate(150%); -webkit-backdrop-filter: blur(6px) saturate(150%); }
+    /* Reduce hero glow blur */
+    .hero::before { filter: blur(20px); opacity: 0.5; }
+    /* Disable non-essential infinite animations */
+    .cta-strip::before { animation: none !important; }
+    .hero h1 .accent-word { animation: none !important; }
+    .hero-orb { animation: none !important; }
+    .hero-chip { animation: none !important; }
+    .hero-particles span { animation: none !important; }
+    .hero-eye, .hero-eye-pupil, .eye-pulse { animation: none !important; }
+    .scroll-cue span { animation: none !important; }
+    /* Reduce compositing layers on mobile */
+    .hero:not(.page-hero) h1 .wm-char { will-change: auto; }
+}
+
 /* Reduced motion — settle everything */
 @media (prefers-reduced-motion: reduce) {
     body { animation: none !important; }

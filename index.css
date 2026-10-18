@@ -3,7 +3,7 @@
    Premium agency aesthetic. Dark + indigo accent. Bold editorial.
    ========================================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300..700&family=Inter:wght@300..700&family=Plus+Jakarta+Sans:wght@400..800&family=Spline+Sans:wght@300..700&family=Geist+Mono:wght@100..900&family=Space+Grotesk:wght@300..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&family=Inter:wght@300..700&family=Plus+Jakarta+Sans:wght@400..800&display=swap');
 
 /* ==========================================================================
    DESIGN TOKENS — PREMIUM EDITORIAL (cosmictaser-inspired)
@@ -41,7 +41,7 @@
 
     /* Typography */
     --font:          'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-    --display:       'Plus Jakarta Sans', 'Space Grotesk', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --display:       'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
     --mono:          'Geist Mono', 'SFMono-Regular', ui-monospace, monospace;
 
     /* Radii */
@@ -2276,4 +2276,12 @@ footer {
     .footer-inner { grid-template-columns: 1fr; }
     .hero-actions { flex-direction: column; align-items: flex-start; }
     .page-404-actions { flex-direction: column; align-items: center; }
+}
+
+/* ==========================================================================
+   MOBILE PERFORMANCE
+   ========================================================================== */
+@media (max-width: 768px) {
+    body::before, body::after { display: none; }
+    .admin-skeleton { animation: none !important; }
 }
