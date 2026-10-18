@@ -839,18 +839,8 @@ function initLoadingScreen() {
     const saved = localStorage.getItem('vortex_theme') || 'dark';
     document.documentElement.setAttribute('data-theme', saved);
 
-    if (!document.getElementById('loading-screen')) {
-        const loader = document.createElement('div');
-        loader.id = 'loading-screen';
-        loader.innerHTML = `
-            <div class="ls-logo">
-                <img src="assets/logo.png" alt="VortexApps">
-                VortexApps
-            </div>
-            <div class="ls-spinner"></div>
-        `;
-        document.body.prepend(loader);
-    }
+    // Loader removed for instant load — no preloader flash
+    return;
 }
 
 function dismissLoadingScreen() {
@@ -858,8 +848,7 @@ function dismissLoadingScreen() {
     document.querySelectorAll('.hero h1.wm-ready').forEach(h => h.classList.add('wm-run'));
     const loader = document.getElementById('loading-screen');
     if (!loader) return;
-    loader.classList.add('fade-out');
-    setTimeout(() => loader.remove(), 300);
+    loader.remove();
 }
 
 // --- DARK / LIGHT THEME ---
@@ -1106,21 +1095,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     initNavScroll();
     initHeroWordmark();
     refreshIcons();
-    await initFirebase();
-    initializeRealtimeSync();
-    checkAdminAuthSession();
-    initCookieConsent();
-    initLenis();
-
-    // Dismiss loading screen after exactly 1 second (700ms delay + 300ms fade out)
-    setTimeout(dismissLoadingScreen, 400);
-
-    // Reveal animations — add 'visible' class when in viewport
+    // Reveal animations — set up IMMEDIATELY so content is visible
+    // without waiting for Firebase (which can take 1-3s on mobile).
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    // Count-up for stat numbers once the stats row scrolls into view
     const countUpStat = (el) => {
         if (reduceMotion) return;
+        if (el.id === 'downloads-counter') return; // real value arrives via Firebase
         const target = el.textContent.trim();
         const match = target.match(/^(\d[\d,]*)(.*)$/);
         if (!match) return;
@@ -1150,6 +1131,46 @@ document.addEventListener('DOMContentLoaded', async () => {
     }, { threshold: 0.1 });
 
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // Safety net: ensure reveals fire even if IntersectionObserver is delayed
+    // (e.g. the page loaded in a hidden/background tab)
+    setTimeout(() => {
+        document.querySelectorAll('.reveal:not(.visible)').forEach(el => el.classList.add('visible'));
+    }, 300);
+
+    // Scroll progress + back-to-top (independent of Firebase)
+    (function() {
+        const bar = document.getElementById('scroll-progress');
+        const btn = document.getElementById('back-to-top');
+        if (!bar && !btn) return;
+        let ticking = false;
+        const update = () => {
+            ticking = false;
+            const h = document.documentElement;
+            const max = h.scrollHeight - h.clientHeight;
+            const pct = max > 0 ? (h.scrollTop / max) * 100 : 0;
+            if (bar) bar.style.width = pct + '%';
+            if (btn) btn.classList.toggle('show', h.scrollTop > 600);
+        };
+        window.addEventListener('scroll', () => {
+            if (!ticking) { ticking = true; requestAnimationFrame(update); }
+        }, { passive: true });
+        update();
+        if (btn) btn.addEventListener('click', () => {
+            if (lenis) lenis.scrollTo(0, { duration: 1.25 });
+            else window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    })();
+
+    // Dismiss loading screen instantly (no loader element now)
+    dismissLoadingScreen();
+
+    // Firebase + realtime sync (background — content already visible)
+    await initFirebase();
+    initLenis();
+    initializeRealtimeSync();
+    checkAdminAuthSession();
+    initCookieConsent();
 });
 
 // --- LENIS SMOOTH SCROLL ---
