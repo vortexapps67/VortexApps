@@ -16,8 +16,8 @@
     <meta property="twitter:image" content="assets/og_image.jpg">
     <link rel="canonical" href="https://vortexapps.dev/">
     <link rel="icon" type="image/png" href="assets/logo.png">
-    <link rel="stylesheet" href="index.css?v=7">
-    <link rel="stylesheet" href="cosmic_refined.css?v=7">
+    <link rel="stylesheet" href="index.css?v=8">
+    <link rel="stylesheet" href="cosmic_refined.css?v=8">
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
@@ -26,7 +26,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..700&family=Plus+Jakarta+Sans:wght@400..800&family=Space+Grotesk:wght@300..700&family=Spline+Sans:wght@300..700&family=IBM+Plex+Sans:wght@300..700&family=Geist+Mono:wght@100..900&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="config.js"></script>
-    <script src="index.js?v=7" defer></script>
+    <script src="index.js?v=8" defer></script>
 </head>
 <body>
     <!-- LOADING SCREEN -->
@@ -133,6 +133,22 @@
 
             <!-- Scroll cue -->
             <div class="scroll-cue" aria-hidden="true"><span></span></div>
+
+            <!-- Liquid-glass eye — gazes at the cursor -->
+            <div class="hero-eye" aria-hidden="true">
+                <div class="hero-eye-pupil"></div>
+                <span class="eye-pulse"></span>
+            </div>
+
+            <!-- Floating glass particles -->
+            <div class="hero-particles" aria-hidden="true">
+                <span style="--x:6%;--y:64%;--d:0s;--s:6px"></span>
+                <span style="--x:22%;--y:30%;--d:1.4s;--s:4px"></span>
+                <span style="--x:64%;--y:74%;--d:0.7s;--s:5px"></span>
+                <span style="--x:84%;--y:26%;--d:2s;--s:3px"></span>
+                <span style="--x:46%;--y:84%;--d:1s;--s:4px"></span>
+                <span style="--x:36%;--y:56%;--d:2.4s;--s:3px"></span>
+            </div>
         </section>
 
         <!-- TECH MARQUEE -->
@@ -242,6 +258,13 @@
         <section class="section-sm">
             <div class="container">
                 <div class="cta-strip">
+                    <div class="cta-dots" aria-hidden="true">
+                        <span style="--x:8%;--y:22%;--d:0s;--s:10px"></span>
+                        <span style="--x:88%;--y:68%;--d:1.2s;--s:8px"></span>
+                        <span style="--x:72%;--y:18%;--d:2.1s;--s:6px"></span>
+                        <span style="--x:22%;--y:74%;--d:1.6s;--s:5px"></span>
+                        <span style="--x:55%;--y:85%;--d:0.6s;--s:7px"></span>
+                    </div>
                     <span class="label" style="display:block;margin-bottom:14px;">work with us</span>
                     <h2>got a project in mind?</h2>
                     <p>we're a small team that moves fast and cares deeply about quality. let's build something together.</p>

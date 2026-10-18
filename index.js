@@ -1172,4 +1172,27 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (btn) btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 })();
 
+// --- HERO EYE GAZE — the pupil follows the cursor ---
+(function() {
+    const eye = document.querySelector('.hero-eye');
+    const pupil = eye && eye.querySelector('.hero-eye-pupil');
+    if (!eye || !pupil) return;
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduce) return;
+    let ticking = false;
+    window.addEventListener('mousemove', (e) => {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(() => {
+            ticking = false;
+            const r = eye.getBoundingClientRect();
+            const dx = e.clientX - (r.left + r.width / 2);
+            const dy = e.clientY - (r.top + r.height / 2);
+            const angle = Math.atan2(dy, dx);
+            const travel = 11; // max pupil travel, px
+            pupil.style.transform = 'translate(' + (Math.cos(angle) * travel) + 'px, ' + (Math.sin(angle) * travel) + 'px)';
+        });
+    }, { passive: true });
+})();
+
 
