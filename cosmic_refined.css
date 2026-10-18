@@ -46,7 +46,8 @@ h1, h2, h3, h4, h5, h6 {
 p { text-wrap: pretty; }
 
 /* --------------------------------------------------------------------------
-   NAVIGATION — minimal, sticky, glassy
+   NAVIGATION — cosmictaser-style: slim constant frosted bar,
+   brand left · links + glass "reach out" pill right
    -------------------------------------------------------------------------- */
 #main-nav {
     position: fixed;
@@ -55,21 +56,11 @@ p { text-wrap: pretty; }
     right: 0;
     z-index: 99990;
     height: calc(var(--nav-h) + 4px);
-    background: color-mix(in srgb, var(--bg) 72%, transparent);
-    backdrop-filter: blur(24px) saturate(180%);
-    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    background: color-mix(in srgb, var(--bg) 80%, transparent);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
     border-bottom: 1px solid var(--glass-border);
-    transition: height 0.3s var(--ease), background 0.3s var(--ease),
-                box-shadow 0.3s var(--ease), backdrop-filter 0.3s var(--ease);
     animation: navIn 0.55s var(--ease-back) 0.05s both;
-}
-/* Scroll-aware: the bar firms up, slims down and gains a shadow */
-#main-nav.scrolled {
-    height: 54px;
-    background: color-mix(in srgb, var(--bg) 88%, transparent);
-    backdrop-filter: blur(30px) saturate(200%);
-    -webkit-backdrop-filter: blur(30px) saturate(200%);
-    box-shadow: 0 10px 40px -18px rgba(0, 0, 0, 0.55);
 }
 @keyframes navIn {
     from { transform: translateY(-100%); opacity: 0; }
@@ -81,88 +72,60 @@ p { text-wrap: pretty; }
 .nav-logo {
     font-family: var(--display);
     font-weight: 600;
-    font-size: 1.0625rem;
-    letter-spacing: -0.045em;
+    font-size: 1.125rem;
+    letter-spacing: -0.02em;
     text-transform: lowercase;
     color: var(--text);
     margin-right: auto;
+    transition: color 0.2s var(--ease);
 }
+.nav-logo:hover { color: var(--accent); }
 .nav-logo img {
     width: 24px;
     height: 24px;
     border-radius: 7px;
-    transition: transform 0.4s var(--ease-back);
 }
-.nav-logo:hover img { transform: rotate(-8deg) scale(1.08); }
 
-/* Center the links on desktop only */
+/* Links sit right after the brand (justify-between), cosmictaser-style */
 .nav-links {
-    gap: 2px;
+    gap: 8px;
     flex: initial;
 }
 
-@media (min-width: 769px) {
-    .nav-links {
-        position: absolute;
-        left: 50%;
-        transform: translateX(-50%);
-    }
-}
-
 .nav-link {
-    position: relative;
-    font-size: 0.875rem;
+    font-size: 0.8125rem;
     font-weight: 450;
-    letter-spacing: -0.012em;
+    letter-spacing: 0.02em;
     color: var(--text-muted);
-    padding: 7px 12px;
-    border-radius: var(--radius-pill);
-    transition: color 0.2s var(--ease), background 0.2s var(--ease);
+    transition: color 0.2s var(--ease);
 }
-/* Underline grows from the left on hover */
-.nav-link::after {
-    content: "";
-    position: absolute;
-    left: 12px;
-    right: 12px;
-    bottom: 4px;
-    height: 1px;
-    background: var(--accent);
-    transform: scaleX(0);
-    transform-origin: right;
-    transition: transform 0.3s var(--ease);
-}
-.nav-link:hover::after,
-.nav-link.active::after {
-    transform: scaleX(1);
-    transform-origin: left;
-}
-.nav-link:hover {
-    color: var(--text);
+.nav-link:hover,
+.nav-link.active {
+    color: var(--accent);
     background: transparent;
 }
-.nav-link.active { color: var(--text); font-weight: 500; }
+.nav-link.active { font-weight: 500; }
 
-.nav-right { gap: 10px; }
+.nav-right {
+    gap: 10px;
+    margin-left: 28px;
+}
 
-/* Glass "reach out" pill — the signature cosmictaser CTA */
+/* Glass "reach out" pill — cosmictaser's signature CTA */
 .nav-right .btn-primary {
     background: var(--glass-bg);
     color: var(--text);
     border: 1px solid var(--glass-border);
-    backdrop-filter: var(--glass-blur);
-    -webkit-backdrop-filter: var(--glass-blur);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     border-radius: var(--radius-pill);
-    padding: 8px 18px;
+    padding: 6px 16px;
     font-weight: 500;
     box-shadow: none;
 }
 .nav-right .btn-primary:hover {
-    background: var(--accent);
-    border-color: var(--accent);
-    color: #fff;
-    transform: scale(1.04);
-    box-shadow: 0 8px 30px -12px var(--accent-glow);
+    transform: scale(1.05);
+    border-color: color-mix(in srgb, var(--accent) 45%, transparent);
 }
 
 /* Theme toggle — rounder, quieter */
@@ -176,18 +139,18 @@ p { text-wrap: pretty; }
     -webkit-backdrop-filter: var(--glass-blur);
 }
 
-/* Hamburger — round, bordered (cosmic-style) */
+/* Hamburger — 36px round, bordered (cosmictaser-style) */
 .nav-hamburger {
-    width: 34px;
-    height: 34px;
+    width: 36px;
+    height: 36px;
     border-radius: var(--radius-pill);
     border: 1px solid var(--glass-border);
     background: var(--glass-bg);
     align-items: center;
     justify-content: center;
-    gap: 4px;
+    gap: 5px;
 }
-.nav-hamburger span { width: 15px; }
+.nav-hamburger span { width: 16px; }
 
 /* --------------------------------------------------------------------------
    BUTTONS — pill-shaped, refined
