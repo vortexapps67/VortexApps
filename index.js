@@ -1163,7 +1163,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 (function() {
     const bar = document.getElementById('scroll-progress');
     const btn = document.getElementById('back-to-top');
-    if (!bar && !btn) return;
+    const nav = document.getElementById('main-nav');
+    if (!bar && !btn && !nav) return;
     let ticking = false;
     const update = () => {
         ticking = false;
@@ -1172,6 +1173,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         const pct = max > 0 ? (h.scrollTop / max) * 100 : 0;
         if (bar) bar.style.width = pct + '%';
         if (btn) btn.classList.toggle('show', h.scrollTop > 600);
+        if (nav) nav.classList.toggle('scrolled', h.scrollTop > 40);
     };
     window.addEventListener('scroll', () => {
         if (!ticking) { ticking = true; requestAnimationFrame(update); }

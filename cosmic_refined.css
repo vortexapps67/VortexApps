@@ -49,12 +49,27 @@ p { text-wrap: pretty; }
    NAVIGATION — minimal, sticky, glassy
    -------------------------------------------------------------------------- */
 #main-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 99990;
     height: calc(var(--nav-h) + 4px);
     background: color-mix(in srgb, var(--bg) 72%, transparent);
-    backdrop-filter: blur(22px) saturate(180%);
-    -webkit-backdrop-filter: blur(22px) saturate(180%);
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
     border-bottom: 1px solid var(--glass-border);
-    animation: navIn 0.7s var(--ease-back) 0.05s both;
+    transition: height 0.3s var(--ease), background 0.3s var(--ease),
+                box-shadow 0.3s var(--ease), backdrop-filter 0.3s var(--ease);
+    animation: navIn 0.55s var(--ease-back) 0.05s both;
+}
+/* Scroll-aware: the bar firms up, slims down and gains a shadow */
+#main-nav.scrolled {
+    height: 54px;
+    background: color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter: blur(30px) saturate(200%);
+    -webkit-backdrop-filter: blur(30px) saturate(200%);
+    box-shadow: 0 10px 40px -18px rgba(0, 0, 0, 0.55);
 }
 @keyframes navIn {
     from { transform: translateY(-100%); opacity: 0; }
@@ -184,7 +199,7 @@ p { text-wrap: pretty; }
 }
 
 .btn-primary {
-    background: linear-gradient(180deg, var(--accent-hover), var(--accent));
+    background: var(--accent);
     border: 1px solid transparent;
     box-shadow: 0 10px 40px -16px var(--accent-glow), inset 0 1px 0 rgba(255,255,255,0.14);
 }
@@ -404,9 +419,7 @@ p { text-wrap: pretty; }
 .cta-strip {
     border-radius: var(--radius-card-lg);
     border: 1px solid var(--glass-border);
-    background:
-        radial-gradient(ellipse 80% 120% at 50% -10%, color-mix(in srgb, var(--accent) 26%, transparent), transparent 70%),
-        linear-gradient(180deg, var(--bg-card-hover), var(--bg-card));
+    background: var(--bg-card);
     backdrop-filter: blur(40px) saturate(160%);
     -webkit-backdrop-filter: blur(40px) saturate(160%);
     padding: clamp(64px, 11vw, 128px) clamp(24px, 8vw, 72px);
@@ -602,9 +615,9 @@ html.theme-fade body { animation: theme-pulse 420ms ease; }
     transform: translateX(-50%);
     width: min(1000px, 95vw);
     height: min(560px, 62vh);
-    background: radial-gradient(ellipse at center, var(--accent-glow) 0%, transparent 65%);
+    background: var(--accent-glow);
     filter: blur(40px);
-    opacity: 0.85;
+    opacity: 0.5;
     pointer-events: none;
     z-index: 0;
 }
@@ -641,7 +654,7 @@ html.theme-fade body { animation: theme-pulse 420ms ease; }
 .ht-line {
     width: 1px;
     height: 96px;
-    background: linear-gradient(to bottom, var(--border-bright), transparent);
+    background: var(--border-bright);
 }
 .ht-tri {
     width: 0;
@@ -705,7 +718,7 @@ body {
     height: 420px;
     top: -12%;
     right: -6%;
-    background: radial-gradient(circle, color-mix(in srgb, var(--accent) 30%, transparent), transparent 70%);
+    background: color-mix(in srgb, var(--accent) 22%, transparent);
     animation: orbDrift 14s ease-in-out infinite alternate;
 }
 .hero-orb-b {
@@ -713,7 +726,7 @@ body {
     height: 340px;
     bottom: -16%;
     left: -4%;
-    background: radial-gradient(circle, color-mix(in srgb, var(--accent-hover) 24%, transparent), transparent 70%);
+    background: color-mix(in srgb, var(--accent-hover) 18%, transparent);
     animation: orbDrift 18s ease-in-out infinite alternate-reverse;
 }
 @keyframes orbDrift {
@@ -766,7 +779,7 @@ body {
     transform: translateX(-50%);
     width: 1px;
     height: 46px;
-    background: linear-gradient(var(--border-bright), transparent);
+    background: var(--border-bright);
     overflow: hidden;
     z-index: 1;
     pointer-events: none;
@@ -799,7 +812,7 @@ body {
     height: 2px;
     width: 0%;
     z-index: 99998;
-    background: linear-gradient(90deg, var(--accent), var(--accent-hover), #C9BCFD);
+    background: var(--accent);
     transition: width 0.1s linear;
 }
 
