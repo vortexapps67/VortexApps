@@ -1,0 +1,856 @@
+/* ==========================================================================
+   COSMIC REFINED — premium editorial overlay
+   Layered on top of index.css to push the aesthetic toward cosmictaser:
+   a minimal sticky glass nav + a massive, tightly-tracked wordmark hero,
+   editorial spacing, and glassy rounded cards. Nothing here changes IDs or
+   JS hooks — it is pure presentation.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   TYPE + SHAPE TOKENS (refined)
+   -------------------------------------------------------------------------- */
+:root {
+    --tr-hero:    -0.048em;
+    --tr-display: -0.065em;
+    --tr-tight:   -0.03em;
+
+    --radius-card:  24px;
+    --radius-card-lg: 28px;
+    --radius-pill:  999px;
+
+    --glass-bg:     rgba(255, 255, 255, 0.035);
+    --glass-border: rgba(255, 255, 255, 0.08);
+    --glass-blur:   blur(24px) saturate(180%);
+}
+
+[data-theme="light"] {
+    --glass-bg:     rgba(255, 255, 255, 0.55);
+    --glass-border: rgba(18, 18, 31, 0.08);
+}
+
+/* --------------------------------------------------------------------------
+   BASE TYPOGRAPHY — editorial line-heights, tighter tracking
+   -------------------------------------------------------------------------- */
+body {
+    line-height: 1.65;
+    letter-spacing: -0.011em;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--display);
+    letter-spacing: var(--tr-display);
+    line-height: 1.02;
+    text-wrap: balance;
+}
+
+p { text-wrap: pretty; }
+
+/* --------------------------------------------------------------------------
+   NAVIGATION — minimal, sticky, glassy
+   -------------------------------------------------------------------------- */
+#main-nav {
+    height: calc(var(--nav-h) + 4px);
+    background: color-mix(in srgb, var(--bg) 72%, transparent);
+    backdrop-filter: blur(22px) saturate(180%);
+    -webkit-backdrop-filter: blur(22px) saturate(180%);
+    border-bottom: 1px solid var(--glass-border);
+    animation: navIn 0.7s var(--ease-back) 0.05s both;
+}
+@keyframes navIn {
+    from { transform: translateY(-100%); opacity: 0; }
+    to   { transform: translateY(0);     opacity: 1; }
+}
+
+.nav-inner { gap: 0; }
+
+.nav-logo {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: 1.0625rem;
+    letter-spacing: -0.045em;
+    text-transform: lowercase;
+    color: var(--text);
+    margin-right: auto;
+}
+.nav-logo img {
+    width: 24px;
+    height: 24px;
+    border-radius: 7px;
+    transition: transform 0.4s var(--ease-back);
+}
+.nav-logo:hover img { transform: rotate(-8deg) scale(1.08); }
+
+/* Center the links on desktop only */
+.nav-links {
+    gap: 2px;
+    flex: initial;
+}
+
+@media (min-width: 769px) {
+    .nav-links {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+}
+
+.nav-link {
+    position: relative;
+    font-size: 0.875rem;
+    font-weight: 450;
+    letter-spacing: -0.012em;
+    color: var(--text-muted);
+    padding: 7px 12px;
+    border-radius: var(--radius-pill);
+    transition: color 0.2s var(--ease), background 0.2s var(--ease);
+}
+/* Underline grows from the left on hover */
+.nav-link::after {
+    content: "";
+    position: absolute;
+    left: 12px;
+    right: 12px;
+    bottom: 4px;
+    height: 1px;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.3s var(--ease);
+}
+.nav-link:hover::after,
+.nav-link.active::after {
+    transform: scaleX(1);
+    transform-origin: left;
+}
+.nav-link:hover {
+    color: var(--text);
+    background: transparent;
+}
+.nav-link.active { color: var(--text); font-weight: 500; }
+
+.nav-right { gap: 10px; }
+
+/* Glass "reach out" pill — the signature cosmictaser CTA */
+.nav-right .btn-primary {
+    background: var(--glass-bg);
+    color: var(--text);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border-radius: var(--radius-pill);
+    padding: 8px 18px;
+    font-weight: 500;
+    box-shadow: none;
+}
+.nav-right .btn-primary:hover {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+    transform: scale(1.04);
+    box-shadow: 0 8px 30px -12px var(--accent-glow);
+}
+
+/* Theme toggle — rounder, quieter */
+.theme-toggle {
+    width: 34px;
+    height: 34px;
+    border-radius: var(--radius-pill);
+    border-color: var(--glass-border);
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+}
+
+/* Hamburger — round, bordered (cosmic-style) */
+.nav-hamburger {
+    width: 34px;
+    height: 34px;
+    border-radius: var(--radius-pill);
+    border: 1px solid var(--glass-border);
+    background: var(--glass-bg);
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+}
+.nav-hamburger span { width: 15px; }
+
+/* --------------------------------------------------------------------------
+   BUTTONS — pill-shaped, refined
+   -------------------------------------------------------------------------- */
+.btn {
+    border-radius: var(--radius-pill);
+    font-weight: 500;
+    letter-spacing: -0.012em;
+}
+
+.btn-primary {
+    background: linear-gradient(180deg, var(--accent-hover), var(--accent));
+    border: 1px solid transparent;
+    box-shadow: 0 10px 40px -16px var(--accent-glow), inset 0 1px 0 rgba(255,255,255,0.14);
+}
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 18px 50px -18px var(--accent-glow), inset 0 1px 0 rgba(255,255,255,0.18);
+}
+
+.btn-secondary {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    color: var(--text);
+}
+.btn-secondary:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--border-bright);
+    transform: translateY(-2px);
+}
+
+.btn-lg { padding: 14px 28px; font-size: 0.9375rem; }
+
+/* --------------------------------------------------------------------------
+   HERO — massive wordmark display
+   -------------------------------------------------------------------------- */
+.hero {
+    padding: clamp(80px, 12vw, 140px) 0 clamp(72px, 10vw, 120px);
+    min-height: min(92svh, 900px);
+    display: flex;
+    align-items: center;
+}
+
+.hero .container { width: 100%; }
+
+.hero-badge { margin-bottom: clamp(24px, 3vw, 36px); }
+
+.hero h1 {
+    font-family: var(--display);
+    font-size: clamp(3.25rem, 11.5vw, 9.5rem);
+    font-weight: 700;
+    line-height: 0.88;
+    letter-spacing: var(--tr-hero);
+    text-transform: lowercase;
+    margin-bottom: clamp(24px, 3vw, 40px);
+    max-width: min(1100px, 94vw);
+    text-wrap: balance;
+}
+
+/* Inner pages — refined display, not the giant wordmark */
+.hero.page-hero {
+    min-height: auto;
+    padding: clamp(72px, 10vw, 128px) 0 clamp(48px, 7vw, 88px);
+}
+.hero.page-hero h1 {
+    font-size: clamp(2.75rem, 7.5vw, 6rem);
+    line-height: 0.92;
+    letter-spacing: var(--tr-display);
+}
+
+/* Gradient wordmark treatment on the accent phrase */
+.hero h1 .accent-word {
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-hover) 45%, #C9BCFD 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+}
+
+.hero-desc {
+    font-size: clamp(1.0625rem, 1.5vw, 1.3125rem);
+    line-height: 1.6;
+    letter-spacing: -0.02em;
+    color: var(--text-muted);
+    max-width: 600px;
+    font-weight: 400;
+    margin-bottom: clamp(32px, 4vw, 52px);
+}
+
+.hero-actions {
+    gap: 14px;
+    margin-bottom: clamp(64px, 8vw, 100px);
+}
+
+/* Stats — glassy pill row */
+.stats-row {
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-pill);
+}
+.stat-cell { padding: 20px 36px; }
+.stat-num {
+    font-family: var(--display);
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: -0.05em;
+}
+.stat-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    font-weight: 500;
+}
+
+/* --------------------------------------------------------------------------
+   SECTIONS — generous editorial spacing
+   -------------------------------------------------------------------------- */
+.section    { padding: clamp(96px, 15vw, 200px) 0; }
+.section-sm { padding: clamp(56px, 9vw, 120px) 0; }
+
+.section-header { margin-bottom: clamp(48px, 6vw, 80px); }
+.section-header .label { margin-bottom: 16px; }
+
+.section-header h2 {
+    font-family: var(--display);
+    font-size: clamp(2.25rem, 6.5vw, 5rem);
+    font-weight: 700;
+    letter-spacing: var(--tr-display);
+    line-height: 0.95;
+    margin-bottom: 18px;
+    text-transform: lowercase;
+}
+
+.section-header p {
+    font-size: clamp(1rem, 1.4vw, 1.1875rem);
+    line-height: 1.65;
+    letter-spacing: -0.015em;
+    color: var(--text-muted);
+    max-width: 620px;
+}
+
+/* Labels — refined eyebrow */
+.label {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+}
+
+/* --------------------------------------------------------------------------
+   CARDS — rounded, glassy, hover lift with accent glow
+   -------------------------------------------------------------------------- */
+.project-card,
+.service-card,
+.value-card,
+.team-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-card-lg);
+    transition: transform 0.35s var(--ease-out), border-color 0.35s var(--ease),
+                box-shadow 0.35s var(--ease), background 0.35s var(--ease);
+}
+
+.project-card:hover,
+.service-card:hover,
+.value-card:hover,
+.team-card:hover {
+    transform: translateY(-6px);
+    background: var(--bg-card-hover);
+    border-color: color-mix(in srgb, var(--accent) 40%, transparent);
+    box-shadow: 0 40px 90px -40px color-mix(in srgb, var(--accent) 55%, transparent),
+                0 0 0 1px color-mix(in srgb, var(--accent) 22%, transparent) inset;
+}
+
+.home-projects-grid,
+.services-grid,
+.about-values-grid {
+    gap: clamp(18px, 2.4vw, 28px);
+}
+
+/* Card headings + body — tighter, editorial */
+.project-card-name,
+.service-card h3,
+.value-card h3,
+.team-name {
+    font-family: var(--display);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    color: var(--text);
+}
+
+.project-card-desc,
+.service-card p,
+.value-card p {
+    line-height: 1.7;
+    letter-spacing: -0.012em;
+    color: var(--text-muted);
+}
+
+.service-icon {
+    border-radius: 14px;
+    background: var(--accent-dim);
+    border: 1px solid color-mix(in srgb, var(--accent) 22%, transparent);
+}
+
+/* --------------------------------------------------------------------------
+   MAKE IN INDIA + misc glass surfaces
+   -------------------------------------------------------------------------- */
+.mii-banner {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-card);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+}
+
+/* --------------------------------------------------------------------------
+   CTA STRIP — refined glass panel
+   -------------------------------------------------------------------------- */
+.cta-strip {
+    border-radius: var(--radius-card-lg);
+    border: 1px solid var(--glass-border);
+    background:
+        radial-gradient(ellipse 80% 120% at 50% -10%, color-mix(in srgb, var(--accent) 26%, transparent), transparent 70%),
+        linear-gradient(180deg, var(--bg-card-hover), var(--bg-card));
+    backdrop-filter: blur(40px) saturate(160%);
+    -webkit-backdrop-filter: blur(40px) saturate(160%);
+    padding: clamp(64px, 11vw, 128px) clamp(24px, 8vw, 72px);
+}
+
+/* Slow breathing glow behind the CTA copy */
+.cta-strip::before {
+    animation: ctaGlow 5s ease-in-out infinite alternate;
+}
+@keyframes ctaGlow {
+    from { opacity: 0.5; }
+    to   { opacity: 1; }
+}
+
+.cta-strip h2 {
+    font-family: var(--display);
+    font-size: clamp(2.5rem, 7vw, 5.5rem);
+    font-weight: 700;
+    letter-spacing: var(--tr-display);
+    line-height: 0.92;
+    margin-bottom: 20px;
+    text-transform: lowercase;
+}
+
+.cta-strip p {
+    font-size: clamp(1rem, 1.4vw, 1.1875rem);
+    line-height: 1.65;
+    letter-spacing: -0.015em;
+    color: var(--text-muted);
+    margin-bottom: 40px;
+}
+
+/* --------------------------------------------------------------------------
+   BADGE
+   -------------------------------------------------------------------------- */
+.badge {
+    border-radius: var(--radius-pill);
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--glass-border);
+    font-size: 0.75rem;
+    letter-spacing: 0.01em;
+    padding: 6px 14px 6px 12px;
+}
+
+/* --------------------------------------------------------------------------
+   FOOTER
+   -------------------------------------------------------------------------- */
+footer { border-top: 1px solid var(--glass-border); }
+
+.footer-links-group h4 {
+    font-family: var(--display);
+    font-size: 0.7rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+}
+
+.footer-links-group a {
+    letter-spacing: -0.01em;
+    transition: color 0.2s var(--ease), transform 0.2s var(--ease);
+    display: inline-block;
+    position: relative;
+}
+.footer-links-group a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 100%;
+    height: 1px;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.3s var(--ease);
+}
+.footer-links-group a:hover { color: var(--text); transform: translateX(3px); }
+.footer-links-group a:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+}
+
+/* --------------------------------------------------------------------------
+   FOCUS VISIBILITY
+   -------------------------------------------------------------------------- */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 6px;
+}
+
+/* --------------------------------------------------------------------------
+   RESPONSIVE — keep it tight on small screens
+   -------------------------------------------------------------------------- */
+@media (max-width: 768px) {
+    .hero {
+        padding: clamp(56px, 14vw, 96px) 0 clamp(56px, 12vw, 88px);
+        min-height: auto;
+    }
+    .hero h1 { font-size: clamp(2.75rem, 14vw, 5rem); }
+    .section    { padding: clamp(64px, 16vw, 112px) 0; }
+    .section-sm { padding: clamp(40px, 10vw, 72px) 0; }
+    .stat-cell { padding: 16px 22px; }
+    .cta-strip { padding: clamp(48px, 12vw, 80px) 24px; }
+}
+
+@media (max-width: 480px) {
+    .hero h1 { font-size: clamp(2.5rem, 15vw, 3.5rem); }
+}
+
+/* --------------------------------------------------------------------------
+   REDUCED MOTION
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+    .project-card, .service-card, .value-card, .team-card,
+    .btn, .nav-logo img, .footer-links-group a {
+        transition: none !important;
+    }
+    .hero:not(.page-hero) h1 .wm-char { animation: none !important; transform: none !important; }
+    .theme-toggle.spinning svg { animation: none !important; }
+    html.theme-fade body { animation: none !important; }
+}
+
+/* ==========================================================================
+   THEME TOGGLE — circular reveal + icon spin
+   ========================================================================== */
+::view-transition-old(root),
+::view-transition-new(root) {
+    animation: none;
+    mix-blend-mode: normal;
+}
+
+@keyframes theme-pulse {
+    0%   { opacity: 1; }
+    40%  { opacity: 0.45; }
+    100% { opacity: 1; }
+}
+html.theme-fade body { animation: theme-pulse 420ms ease; }
+
+.theme-toggle { overflow: visible; }
+.theme-toggle.spinning svg {
+    animation: ti-spin 620ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+@keyframes ti-spin {
+    0%   { transform: rotate(0deg) scale(1); }
+    50%  { transform: rotate(180deg) scale(0.55); }
+    100% { transform: rotate(360deg) scale(1); }
+}
+
+/* ==========================================================================
+   HERO WORDMARK — per-character rise (cosmictaser signature)
+   ========================================================================== */
+.hero { position: relative; }
+.hero .container { position: relative; z-index: 1; }
+
+.hero:not(.page-hero) h1 {
+    position: relative;   /* lets JS read char offsets for gradient alignment */
+    overflow: hidden;
+    /* Room under the mask for descenders (p, y, g) — otherwise their tails
+       are sliced flat by overflow:hidden. Offset with negative margin so
+       the spacing below the headline is unchanged. */
+    padding-bottom: 0.26em;
+    margin-bottom: calc(clamp(24px, 3vw, 40px) - 0.26em);
+}
+.hero:not(.page-hero) h1 .wm-word {
+    display: inline-block;
+    white-space: nowrap;
+}
+.hero:not(.page-hero) h1 .wm-char {
+    display: inline-block;
+    will-change: transform;
+    /* Each char carries its OWN gradient: the ancestor's background-clip:text
+       cannot paint into these composited layers (will-change / transform),
+       which made the whole headline invisible. JS overrides background-size
+       and background-position so the sweep stays continuous across words. */
+    background-image: linear-gradient(135deg, var(--accent) 0%, var(--accent-hover) 45%, #C9BCFD 100%);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-position: 0 0;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.hero:not(.page-hero) h1.wm-ready .wm-char {
+    transform: translateY(115%);
+}
+.hero:not(.page-hero) h1.wm-ready.wm-run .wm-char {
+    animation: wm-rise 0.95s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation-delay: calc(0.05s + var(--i, 0) * 0.035s);
+}
+@keyframes wm-rise {
+    to { transform: translateY(0); }
+}
+
+/* Soft accent glow behind the hero */
+.hero::before {
+    content: "";
+    position: absolute;
+    top: -8%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(1000px, 95vw);
+    height: min(560px, 62vh);
+    background: radial-gradient(ellipse at center, var(--accent-glow) 0%, transparent 65%);
+    filter: blur(40px);
+    opacity: 0.85;
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Vertical tagline on the hero's right edge (cosmictaser signature) */
+.hero-tagline {
+    position: absolute;
+    right: clamp(16px, 3vw, 48px);
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    z-index: 1;
+    pointer-events: none;
+    animation: tagline-in 1s cubic-bezier(0.16, 1, 0.3, 1) 1.3s both;
+}
+@keyframes tagline-in {
+    from { opacity: 0; transform: translateY(-50%) translateX(12px); }
+    to   { opacity: 1; transform: translateY(-50%) translateX(0); }
+}
+.hero-tagline p {
+    writing-mode: vertical-rl;
+    font-family: var(--mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    line-height: 2;
+    margin: 0;
+    text-align: center;
+}
+.ht-line {
+    width: 1px;
+    height: 96px;
+    background: linear-gradient(to bottom, var(--border-bright), transparent);
+}
+.ht-tri {
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 8px solid var(--accent);
+    opacity: 0.85;
+}
+@media (max-width: 1080px) {
+    .hero-tagline { display: none; }
+}
+
+/* ==========================================================================
+   MARQUEE — display type with accent separators (cosmictaser-style)
+   ========================================================================== */
+.marquee-section { padding: 26px 0; background: transparent; }
+
+.marquee-item {
+    font-family: var(--display);
+    font-size: clamp(1.1rem, 2.4vw, 1.6rem);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    text-transform: lowercase;
+    color: var(--text-dim);
+}
+.marquee-item span { color: var(--accent); font-size: 0.9em; }
+
+/* ==========================================================================
+   BUTTONS — glass pill with springy hover
+   ========================================================================== */
+.btn {
+    border-radius: var(--radius-pill);
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+                background 0.25s ease, border-color 0.25s ease, box-shadow 0.35s ease;
+}
+.btn:hover { transform: translateY(-2px) scale(1.03); }
+
+/* ==========================================================================
+   PAGE ENTER + VISUALS + MICRO-MOTION
+   ========================================================================== */
+body {
+    animation: pageIn 0.5s var(--ease) both;
+}
+@keyframes pageIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Ambient orbs drifting behind hero content */
+.hero-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(70px);
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.5;
+}
+.hero-orb-a {
+    width: 420px;
+    height: 420px;
+    top: -12%;
+    right: -6%;
+    background: radial-gradient(circle, color-mix(in srgb, var(--accent) 30%, transparent), transparent 70%);
+    animation: orbDrift 14s ease-in-out infinite alternate;
+}
+.hero-orb-b {
+    width: 340px;
+    height: 340px;
+    bottom: -16%;
+    left: -4%;
+    background: radial-gradient(circle, color-mix(in srgb, var(--accent-hover) 24%, transparent), transparent 70%);
+    animation: orbDrift 18s ease-in-out infinite alternate-reverse;
+}
+@keyframes orbDrift {
+    from { transform: translate(0, 0) scale(1); }
+    to   { transform: translate(34px, 26px) scale(1.08); }
+}
+
+/* Floating glass chips — right edge only, clear of the headline */
+.hero-chips {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+}
+.hero-chip {
+    position: absolute;
+    right: 5%;
+    font-family: var(--mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.08em;
+    text-transform: lowercase;
+    color: var(--text-dim);
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-pill);
+    padding: 8px 14px;
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    opacity: 0.75;
+    animation: chipFloat 6s ease-in-out var(--d, 0s) infinite;
+}
+.hero-chip:nth-child(1) { top: 22%; }
+.hero-chip:nth-child(2) { top: 52%; right: 9%; }
+.hero-chip:nth-child(3) { top: 78%; }
+@keyframes chipFloat {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-14px); }
+}
+@media (max-width: 900px) {
+    .hero-chips { display: none; }
+    .hero-orb-a { width: 260px; height: 260px; }
+    .hero-orb-b { width: 220px; height: 220px; }
+}
+
+/* Scroll cue — a dot travelling down a hairline at the hero's foot */
+.scroll-cue {
+    position: absolute;
+    left: 50%;
+    bottom: 26px;
+    transform: translateX(-50%);
+    width: 1px;
+    height: 46px;
+    background: linear-gradient(var(--border-bright), transparent);
+    overflow: hidden;
+    z-index: 1;
+    pointer-events: none;
+}
+.scroll-cue span {
+    position: absolute;
+    top: -8px;
+    left: 50%;
+    width: 3px;
+    height: 8px;
+    margin-left: -1.5px;
+    border-radius: 2px;
+    background: var(--accent);
+    animation: cueDrop 1.8s var(--ease) infinite;
+}
+@keyframes cueDrop {
+    0%   { top: -8px; opacity: 0; }
+    30%  { opacity: 1; }
+    100% { top: 50px; opacity: 0; }
+}
+@media (max-width: 768px) {
+    .scroll-cue { display: none; }
+}
+
+/* Scroll progress bar */
+#scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 2px;
+    width: 0%;
+    z-index: 99998;
+    background: linear-gradient(90deg, var(--accent), var(--accent-hover), #C9BCFD);
+    transition: width 0.1s linear;
+}
+
+/* Back to top */
+#back-to-top {
+    position: fixed;
+    right: 22px;
+    bottom: 22px;
+    z-index: 99001;
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-pill);
+    border: 1px solid var(--glass-border);
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    opacity: 0;
+    transform: translateY(12px);
+    pointer-events: none;
+    transition: opacity 0.3s var(--ease), transform 0.3s var(--ease), background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+}
+#back-to-top.show {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+#back-to-top:hover {
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent);
+}
+
+/* Reduced motion — settle everything */
+@media (prefers-reduced-motion: reduce) {
+    body { animation: none !important; }
+    .hero-orb, .hero-chip, .scroll-cue span { animation: none !important; }
+    .cta-strip::before { animation: none !important; }
+    #main-nav { animation: none !important; }
+}

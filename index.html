@@ -3,26 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VortexApps — High-Performance Software Systems</title>
-    <meta name="description" content="VortexApps builds high-performance software systems — from AI integrations to scalable web applications. Made in India.">
+    <title>vortexapps — high-performance software systems</title>
+    <meta name="description" content="vortexapps builds high-performance software systems — from ai integrations to scalable web applications. made in india.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://vortexapps.dev/">
-    <meta property="og:title" content="VortexApps — High-Performance Software Systems">
-    <meta property="og:description" content="VortexApps builds high-performance software systems — from AI integrations to scalable web applications. Made in India.">
+    <meta property="og:title" content="vortexapps — high-performance software systems">
+    <meta property="og:description" content="vortexapps builds high-performance software systems — from ai integrations to scalable web applications. made in india.">
     <meta property="og:image" content="assets/og_image.jpg">
     <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:title" content="VortexApps — High-Performance Software Systems">
-    <meta property="twitter:description" content="VortexApps builds high-performance software systems — from AI integrations to scalable web applications. Made in India.">
+    <meta property="twitter:title" content="vortexapps — high-performance software systems">
+    <meta property="twitter:description" content="vortexapps builds high-performance software systems — from ai integrations to scalable web applications. made in india.">
     <meta property="twitter:image" content="assets/og_image.jpg">
     <link rel="canonical" href="https://vortexapps.dev/">
     <link rel="icon" type="image/png" href="assets/logo.png">
-    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="index.css?v=2">
+    <link rel="stylesheet" href="cosmic_refined.css?v=2">
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..700&family=Plus+Jakarta+Sans:wght@400..800&family=Space+Grotesk:wght@300..700&family=Spline+Sans:wght@300..700&family=IBM+Plex+Sans:wght@300..700&family=Geist+Mono:wght@100..900&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="config.js"></script>
-    <script src="index.js" defer></script>
+    <script src="index.js?v=2" defer></script>
 </head>
 <body>
     <!-- LOADING SCREEN -->
@@ -42,20 +46,20 @@
         <div class="nav-inner">
             <a href="index.html" class="nav-logo">
                 <img src="assets/logo.png" alt="VortexApps">
-                VortexApps
+                vortexapps
             </a>
             <div class="nav-links" id="nav-links">
-                <a href="index.html" class="nav-link active">Home</a>
-                <a href="about.html" class="nav-link">About</a>
-                <a href="services.html" class="nav-link">Services</a>
-                <a href="projects.html" class="nav-link">Projects</a>
-                <a href="contact.html" class="nav-link">Contact</a>
+                <a href="index.html" class="nav-link active">home</a>
+                <a href="about.html" class="nav-link">about</a>
+                <a href="services.html" class="nav-link">services</a>
+                <a href="projects.html" class="nav-link">projects</a>
+                <a href="contact.html" class="nav-link">contact</a>
             </div>
             <div class="nav-right">
-                <button class="theme-toggle" onclick="toggleTheme()" id="theme-btn" aria-label="Toggle theme">
+                <button class="theme-toggle" onclick="toggleTheme(event)" id="theme-btn" aria-label="Toggle theme">
                     <i data-lucide="moon" id="theme-icon"></i>
                 </button>
-                <a href="contact.html" class="btn btn-primary btn-sm">Get in touch</a>
+                <a href="contact.html" class="btn btn-primary btn-sm">reach out</a>
                 <button class="nav-hamburger" id="nav-hamburger" onclick="toggleNav()" aria-label="Menu">
                     <span></span><span></span><span></span>
                 </button>
@@ -71,25 +75,24 @@
                 <div class="hero-badge reveal reveal-1">
                     <span class="badge">
                         <span class="badge-dot"></span>
-                        Available for projects
+                        available for projects
                     </span>
                 </div>
 
                 <h1 class="reveal reveal-2">
-                    Software that<br>
-                    <span class="accent-word">actually ships.</span>
+                    <span class="accent-word">software that<br>actually ships.</span>
                 </h1>
 
                 <p class="hero-desc reveal reveal-3">
-                    VortexApps is a two-person engineering team building AI-powered products and scalable web systems from Patna, India.
+                    vortexapps is a two-person engineering team building ai-powered products and scalable web systems from patna, india.
                 </p>
 
                 <div class="hero-actions reveal reveal-4">
                     <a href="projects.html" class="btn btn-primary btn-lg">
-                        See our work
+                        see our work
                         <i data-lucide="arrow-right" style="width:14px;height:14px;"></i>
                     </a>
-                    <a href="contact.html" class="btn btn-secondary btn-lg">Start a project</a>
+                    <a href="contact.html" class="btn btn-secondary btn-lg">start a project</a>
                 </div>
 
                 <div class="stats-row reveal reveal-5">
@@ -107,10 +110,29 @@
                     </div>
                     <div class="stat-cell">
                         <div class="stat-num">IN</div>
-                        <div class="stat-label">Made in India</div>
+                        <div class="stat-label">made in india</div>
                     </div>
                 </div>
             </div>
+
+            <!-- Vertical tagline — cosmictaser-style hero edge marker -->
+            <div class="hero-tagline" aria-hidden="true">
+                <p>software development<br>based in patna, india</p>
+                <span class="ht-line"></span>
+                <span class="ht-tri"></span>
+            </div>
+
+            <!-- Ambient visuals — drifting orbs + floating glass chips (right edge only) -->
+            <div class="hero-orb hero-orb-a" aria-hidden="true"></div>
+            <div class="hero-orb hero-orb-b" aria-hidden="true"></div>
+            <div class="hero-chips" aria-hidden="true">
+                <span class="hero-chip" style="--d:0s">react</span>
+                <span class="hero-chip" style="--d:.7s">kotlin</span>
+                <span class="hero-chip" style="--d:1.4s">ai</span>
+            </div>
+
+            <!-- Scroll cue -->
+            <div class="scroll-cue" aria-hidden="true"><span></span></div>
         </section>
 
         <!-- TECH MARQUEE -->
@@ -150,11 +172,11 @@
         <!-- Make in India banner -->
         <section class="section-sm" style="padding-bottom: 0;">
             <div class="container">
-                <div style="display:flex;align-items:center;gap:20px;padding:24px;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);">
+                <div class="mii-banner" style="display:flex;align-items:center;gap:20px;">
                     <img src="assets/Make_In_India.png" alt="Make in India" style="height:48px;width:auto;object-fit:contain;flex-shrink:0;">
                     <div>
-                        <div style="font-size:0.875rem;font-weight:600;color:var(--text);margin-bottom:4px;">Proudly Made in India</div>
-                        <div style="font-size:0.8125rem;color:var(--text-muted);">All VortexApps products are designed, built, and maintained by engineers from Patna, India.</div>
+                        <div style="font-size:0.875rem;font-weight:600;color:var(--text);margin-bottom:4px;letter-spacing:-0.01em;">Proudly made in india</div>
+                        <div style="font-size:0.8125rem;color:var(--text-muted);letter-spacing:-0.01em;">All VortexApps products are designed, built, and maintained by engineers from Patna, India.</div>
                     </div>
                 </div>
             </div>
@@ -164,16 +186,16 @@
         <section class="section">
             <div class="container">
                 <div class="section-header">
-                    <span class="label">Projects</span>
-                    <h2>What we've shipped.</h2>
-                    <p>Three production-ready products, each built with care and shipped to real users.</p>
+                    <span class="label">projects</span>
+                    <h2>what we've shipped.</h2>
+                    <p>three production-ready products, each built with care and shipped to real users.</p>
                 </div>
                 <div class="home-projects-grid" id="dynamic-projects-grid">
                     <!-- Renders via JS -->
                 </div>
                 <div style="margin-top:28px;text-align:center;">
                     <a href="projects.html" class="btn btn-secondary">
-                        View all projects
+                        view all projects
                         <i data-lucide="arrow-right" style="width:13px;height:13px;"></i>
                     </a>
                 </div>
@@ -186,28 +208,28 @@
         <section class="section">
             <div class="container">
                 <div class="section-header">
-                    <span class="label">Why us</span>
-                    <h2>How we think about software.</h2>
+                    <span class="label">why us</span>
+                    <h2>how we think about software.</h2>
                 </div>
                 <div class="about-values-grid">
                     <div class="value-card reveal reveal-1">
                         <div class="value-num">01</div>
-                        <h3>Precision over shortcuts</h3>
+                        <h3>precision over shortcuts</h3>
                         <p>We build things right the first time. Clean architecture, clear code, zero tech debt shipped.</p>
                     </div>
                     <div class="value-card reveal reveal-2">
                         <div class="value-num">02</div>
-                        <h3>Simplicity is the feature</h3>
+                        <h3>simplicity is the feature</h3>
                         <p>The best interface is one users never have to think about. We obsess over reducing friction.</p>
                     </div>
                     <div class="value-card reveal reveal-3">
                         <div class="value-num">03</div>
-                        <h3>Built to scale</h3>
+                        <h3>built to scale</h3>
                         <p>Every system is designed for tomorrow. We architect for growth, not for the demo.</p>
                     </div>
                     <div class="value-card reveal reveal-4">
                         <div class="value-num">04</div>
-                        <h3>Ship it, then improve</h3>
+                        <h3>ship it, then improve</h3>
                         <p>We believe in getting real products in front of real users and iterating fast from there.</p>
                     </div>
                 </div>
@@ -220,10 +242,10 @@
         <section class="section-sm">
             <div class="container">
                 <div class="cta-strip">
-                    <span class="label" style="display:block;margin-bottom:14px;">Work with us</span>
-                    <h2>Got a project in mind?</h2>
-                    <p>We're a small team that moves fast and cares deeply about quality. Let's build something together.</p>
-                    <a href="contact.html" class="btn btn-primary btn-lg">Start a conversation</a>
+                    <span class="label" style="display:block;margin-bottom:14px;">work with us</span>
+                    <h2>got a project in mind?</h2>
+                    <p>we're a small team that moves fast and cares deeply about quality. let's build something together.</p>
+                    <a href="contact.html" class="btn btn-primary btn-lg">start a conversation</a>
                 </div>
             </div>
         </section>
@@ -236,38 +258,42 @@
                 <div>
                     <div class="footer-brand">
                         <img src="assets/logo.png" alt="VortexApps">
-                        VortexApps
+                        vortexapps
                     </div>
-                    <div class="footer-copy">© 2025 VortexApps. Made in India.</div>
+                    <div class="footer-copy">© 2025 vortexapps. made in india.</div>
                 </div>
                 <div class="footer-links-group">
-                    <h4>Navigation</h4>
-                    <a href="index.html">Home</a>
-                    <a href="about.html">About</a>
-                    <a href="services.html">Services</a>
-                    <a href="projects.html">Projects</a>
-                    <a href="contact.html">Contact</a>
+                    <h4>navigation</h4>
+                    <a href="index.html">home</a>
+                    <a href="about.html">about</a>
+                    <a href="services.html">services</a>
+                    <a href="projects.html">projects</a>
+                    <a href="contact.html">contact</a>
                 </div>
                 <div class="footer-links-group">
-                    <h4>Connect</h4>
+                    <h4>connect</h4>
                     <a href="mailto:beatwave790@gmail.com">beatwave790@gmail.com</a>
-                    <a href="https://discord.gg/spbuDTePSR" target="_blank" rel="noopener">Discord</a>
-                    <a href="https://instagram.com/akshansh_6969" target="_blank" rel="noopener">Instagram</a>
-                    <a href="https://support-akshansh.vercel.app" target="_blank" rel="noopener">Support us</a>
+                    <a href="https://discord.gg/spbuDTePSR" target="_blank" rel="noopener">discord</a>
+                    <a href="https://instagram.com/akshansh_6969" target="_blank" rel="noopener">instagram</a>
+                    <a href="https://support-akshansh.vercel.app" target="_blank" rel="noopener">support us</a>
                 </div>
                 <div class="footer-links-group">
-                    <h4>Legal</h4>
-                    <a href="privacy.html">Privacy Policy</a>
-                    <a href="terms.html">Terms of Service</a>
+                    <h4>legal</h4>
+                    <a href="privacy.html">privacy policy</a>
+                    <a href="terms.html">terms of service</a>
                 </div>
                 <div class="footer-links-group">
-                    <h4>Admin</h4>
-                    <a href="admin.html">Dashboard</a>
+                    <h4>admin</h4>
+                    <a href="admin.html">dashboard</a>
                 </div>
             </div>
         </div>
     </footer>
 
     <div id="toast"></div>
+
+    <!-- Scroll progress + back to top -->
+    <div id="scroll-progress" aria-hidden="true"></div>
+    <button id="back-to-top" aria-label="Back to top"><i data-lucide="arrow-up" style="width:15px;height:15px;"></i></button>
 </body>
 </html>

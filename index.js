@@ -862,6 +862,8 @@ function initLoadingScreen() {
 }
 
 function dismissLoadingScreen() {
+    // Kick off the hero wordmark rise as the loader fades
+    document.querySelectorAll('.hero h1.wm-ready').forEach(h => h.classList.add('wm-run'));
     const loader = document.getElementById('loading-screen');
     if (!loader) return;
     loader.classList.add('fade-out');
@@ -883,14 +885,172 @@ function updateThemeIcon() {
     }
 }
 
-function toggleTheme() {
+function toggleTheme(event) {
     const current = document.documentElement.getAttribute('data-theme') || 'dark';
     const next = current === 'dark' ? 'light' : 'dark';
-    document.documentElement.setAttribute('data-theme', next);
-    localStorage.setItem('vortex_theme', next);
-    updateThemeIcon();
+
+    // Where the circular reveal originates — click point, else the toggle button
+    const btn = document.getElementById('theme-btn');
+    let x, y;
+    if (event && typeof event.clientX === 'number' && (event.clientX || event.clientY)) {
+        x = event.clientX;
+        y = event.clientY;
+    } else if (btn) {
+        const r = btn.getBoundingClientRect();
+        x = r.left + r.width / 2;
+        y = r.top + r.height / 2;
+    } else {
+        x = window.innerWidth - 40;
+        y = 36;
+    }
+
+    const apply = () => {
+        document.documentElement.setAttribute('data-theme', next);
+        localStorage.setItem('vortex_theme', next);
+        updateThemeIcon();
+    };
+
+    // Spin the toggle icon
+    if (btn) {
+        btn.classList.remove('spinning');
+        void btn.offsetWidth; // restart animation
+        btn.classList.add('spinning');
+        setTimeout(() => btn.classList.remove('spinning'), 650);
+    }
+
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (!reduceMotion && typeof document.startViewTransition === 'function') {
+        const radius = Math.hypot(
+            Math.max(x, window.innerWidth - x),
+            Math.max(y, window.innerHeight - y)
+        );
+        try {
+            const transition = document.startViewTransition(apply);
+            transition.ready.then(() => {
+                document.documentElement.animate(
+                    { clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${radius}px at ${x}px ${y}px)`] },
+                    {
+                        duration: 600,
+                        easing: 'cubic-bezier(0.16, 1, 0.3, 1)',
+                        pseudoElement: '::view-transition-new(root)'
+                    }
+                );
+            }).catch(() => {});
+        } catch (e) {
+            apply();
+        }
+    } else {
+        // Fallback — quick crossfade pulse
+        apply();
+        document.documentElement.classList.remove('theme-fade');
+        void document.documentElement.offsetWidth;
+        document.documentElement.classList.add('theme-fade');
+        setTimeout(() => document.documentElement.classList.remove('theme-fade'), 450);
+    }
 }
 window.toggleTheme = toggleTheme;
+
+// --- HERO WORDMARK — split headline into characters for the rise animation ---
+// Each char paints its own gradient slice (the ancestor's background-clip:text
+// can't reach into the chars' composited layers). This aligns the slices so
+// the sweep reads as one continuous gradient across the whole headline.
+function layoutWordmarkGradient(h1) {
+    if (!h1 || !h1.isConnected) return;
+    const w = h1.offsetWidth;
+    const h = h1.offsetHeight;
+    if (!w || !h) return;
+    h1.querySelectorAll('.wm-char').forEach(ch => {
+        ch.style.backgroundSize = w + 'px ' + h + 'px';
+        ch.style.backgroundPosition = (-ch.offsetLeft) + 'px ' + (-ch.offsetTop) + 'px';
+    });
+}
+
+let __wmResizeTimer = null;
+window.addEventListener('resize', () => {
+    clearTimeout(__wmResizeTimer);
+    __wmResizeTimer = setTimeout(() => {
+        document.querySelectorAll('.hero h1.wm-ready').forEach(layoutWordmarkGradient);
+    }, 150);
+});
+
+// If the page loads/animates while the window is hidden, the timeline freezes
+// and letters can be left stranded at mixed heights. Settle them once visible.
+document.addEventListener('visibilitychange', () => {
+    if (document.hidden) return;
+    setTimeout(() => {
+        document.getAnimations().forEach(a => {
+            if (a.animationName === 'wm-rise' && a.playState === 'running') {
+                try { a.finish(); } catch (e) {}
+            }
+        });
+    }, 5000);
+});
+
+function initHeroWordmark() {
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    document.querySelectorAll('.hero:not(.page-hero) h1').forEach(h1 => {
+        if (h1.dataset.wmSplit) return;
+        h1.dataset.wmSplit = '1';
+
+        let i = 0;
+        const splitNode = (node) => {
+            [...node.childNodes].forEach(child => {
+                if (child.nodeType === Node.TEXT_NODE) {
+                    const frag = document.createDocumentFragment();
+                    // Split into words so wrapping still happens between words only
+                    child.textContent.split(/(\s+)/).forEach(part => {
+                        if (!part) return;
+                        if (/^\s+$/.test(part)) { frag.appendChild(document.createTextNode(' ')); return; }
+                        const word = document.createElement('span');
+                        word.className = 'wm-word';
+                        [...part].forEach(ch => {
+                            const s = document.createElement('span');
+                            s.className = 'wm-char';
+                            s.style.setProperty('--i', reduceMotion ? 0 : i++);
+                            s.textContent = ch;
+                            word.appendChild(s);
+                        });
+                        frag.appendChild(word);
+                    });
+                    node.replaceChild(frag, child);
+                } else if (child.nodeType === Node.ELEMENT_NODE && child.tagName !== 'BR') {
+                    splitNode(child);
+                }
+            });
+        };
+        splitNode(h1);
+        h1.classList.add('wm-ready');
+        layoutWordmarkGradient(h1);
+
+        // Text metrics shift as web fonts arrive and text-wrap:balance reflows —
+        // any stale slice offset makes letters sample the wrong gradient colors
+        // (visible as a "scrambled" patchwork). Re-align on every signal we have.
+        const realign = () => layoutWordmarkGradient(h1);
+        try {
+            if (document.fonts && document.fonts.addEventListener) {
+                document.fonts.addEventListener('loadingdone', realign);
+            }
+        } catch (e) {}
+        if (document.fonts && document.fonts.ready) {
+            document.fonts.ready.then(realign).catch(() => {});
+        }
+        window.addEventListener('load', realign);
+        [800, 1800, 3500].forEach(ms => setTimeout(realign, ms));
+        // Word boxes move/resize whenever layout settles — the definitive trigger
+        try {
+            if (window.ResizeObserver) {
+                const ro = new ResizeObserver(() => layoutWordmarkGradient(h1));
+                ro.observe(h1);
+                h1.querySelectorAll('.wm-word').forEach(w => ro.observe(w));
+            }
+        } catch (e) {}
+
+        if (reduceMotion) { h1.classList.add('wm-run'); return; }
+        // Safety net — run even if the loader never dismisses
+        setTimeout(() => h1.classList.add('wm-run'), 2600);
+    });
+}
 
 // --- ADD NEW PROJECT ---
 function addProject() {
@@ -998,6 +1158,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     initLoadingScreen();
     initThemeToggle();
     initNavScroll();
+    initHeroWordmark();
     refreshIcons();
     await initFirebase();
     initializeRealtimeSync();
@@ -1008,10 +1169,34 @@ document.addEventListener('DOMContentLoaded', async () => {
     setTimeout(dismissLoadingScreen, 700);
 
     // Reveal animations — add 'visible' class when in viewport
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // Count-up for stat numbers once the stats row scrolls into view
+    const countUpStat = (el) => {
+        if (reduceMotion) return;
+        const target = el.textContent.trim();
+        const match = target.match(/^(\d[\d,]*)(.*)$/);
+        if (!match) return;
+        const end = parseInt(match[1].replace(/,/g, ''), 10);
+        const suffix = match[2];
+        const dur = 1400;
+        const t0 = performance.now();
+        const frame = (now) => {
+            const p = Math.min((now - t0) / dur, 1);
+            const eased = 1 - Math.pow(1 - p, 3);
+            el.textContent = String(Math.round(end * eased)) + suffix;
+            if (p < 1) requestAnimationFrame(frame);
+        };
+        requestAnimationFrame(frame);
+    };
+
     const observer = new IntersectionObserver(entries => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('visible');
+                if (entry.target.classList.contains('stats-row')) {
+                    entry.target.querySelectorAll('.stat-num').forEach(countUpStat);
+                }
                 observer.unobserve(entry.target);
             }
         });
@@ -1019,5 +1204,26 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 });
+
+// --- SCROLL PROGRESS + BACK TO TOP ---
+(function() {
+    const bar = document.getElementById('scroll-progress');
+    const btn = document.getElementById('back-to-top');
+    if (!bar && !btn) return;
+    let ticking = false;
+    const update = () => {
+        ticking = false;
+        const h = document.documentElement;
+        const max = h.scrollHeight - h.clientHeight;
+        const pct = max > 0 ? (h.scrollTop / max) * 100 : 0;
+        if (bar) bar.style.width = pct + '%';
+        if (btn) btn.classList.toggle('show', h.scrollTop > 600);
+    };
+    window.addEventListener('scroll', () => {
+        if (!ticking) { ticking = true; requestAnimationFrame(update); }
+    }, { passive: true });
+    update();
+    if (btn) btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+})();
 
 

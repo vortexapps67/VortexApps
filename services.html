@@ -1,32 +1,36 @@
-ï»¿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Services â€” VortexApps</title>
-    <meta name="description" content="VortexApps offers full-stack web development, AI integrations, and custom software engineering services.">
+    <title>services — vortexapps</title>
+    <meta name="description" content="vortexapps offers full-stack web development, AI integrations, and custom software engineering services.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://vortexapps.dev/services.html">
-    <meta property="og:title" content="Services â€” VortexApps">
-    <meta property="og:description" content="VortexApps offers full-stack web development, AI integrations, and custom software engineering services.">
+    <meta property="og:title" content="services — vortexapps">
+    <meta property="og:description" content="vortexapps offers full-stack web development, AI integrations, and custom software engineering services.">
     <meta property="og:image" content="assets/og_image.jpg">
     <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:title" content="Services â€” VortexApps">
-    <meta property="twitter:description" content="VortexApps offers full-stack web development, AI integrations, and custom software engineering services.">
+    <meta property="twitter:title" content="services — vortexapps">
+    <meta property="twitter:description" content="vortexapps offers full-stack web development, AI integrations, and custom software engineering services.">
     <meta property="twitter:image" content="assets/og_image.jpg">
     <link rel="canonical" href="https://vortexapps.dev/services.html">
     <link rel="icon" type="image/png" href="assets/logo.png">
-    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="index.css?v=2">
+    <link rel="stylesheet" href="cosmic_refined.css?v=2">
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..700&family=Plus+Jakarta+Sans:wght@400..800&family=Space+Grotesk:wght@300..700&family=Spline+Sans:wght@300..700&family=IBM+Plex+Sans:wght@300..700&family=Geist+Mono:wght@100..900&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="config.js"></script>
-    <script src="index.js" defer></script>
+    <script src="index.js?v=2" defer></script>
 </head>
 <body>
     <div id="loading-screen">
-        <div class="ls-logo"><img src="assets/logo.png" alt="VortexApps"> VortexApps</div>
+        <div class="ls-logo"><img src="assets/logo.png" alt="vortexapps"> vortexapps</div>
         <div class="ls-spinner"></div>
     </div>
 
@@ -34,17 +38,17 @@
 
     <nav id="main-nav">
         <div class="nav-inner">
-            <a href="index.html" class="nav-logo"><img src="assets/logo.png" alt="VortexApps"> VortexApps</a>
+            <a href="index.html" class="nav-logo"><img src="assets/logo.png" alt="vortexapps"> vortexapps</a>
             <div class="nav-links" id="nav-links">
-                <a href="index.html" class="nav-link">Home</a>
-                <a href="about.html" class="nav-link">About</a>
-                <a href="services.html" class="nav-link active">Services</a>
-                <a href="projects.html" class="nav-link">Projects</a>
-                <a href="contact.html" class="nav-link">Contact</a>
+                <a href="index.html" class="nav-link">home</a>
+                <a href="about.html" class="nav-link">about</a>
+                <a href="services.html" class="nav-link active">services</a>
+                <a href="projects.html" class="nav-link">projects</a>
+                <a href="contact.html" class="nav-link">contact</a>
             </div>
             <div class="nav-right">
-                <button class="theme-toggle" onclick="toggleTheme()" id="theme-btn" aria-label="Toggle theme"><i data-lucide="moon" id="theme-icon"></i></button>
-                <a href="contact.html" class="btn btn-primary btn-sm">Get in touch</a>
+                <button class="theme-toggle" onclick="toggleTheme(event)" id="theme-btn" aria-label="Toggle theme"><i data-lucide="moon" id="theme-icon"></i></button>
+                <a href="contact.html" class="btn btn-primary btn-sm">reach out</a>
                 <button class="nav-hamburger" id="nav-hamburger" onclick="toggleNav()" aria-label="Menu"><span></span><span></span><span></span></button>
             </div>
         </div>
@@ -52,11 +56,11 @@
 
     <main>
         <!-- PAGE HEADER -->
-        <section class="hero" style="padding-bottom:64px;">
+        <section class="hero page-hero" style="padding-bottom:64px;">
             <div class="container">
-                <span class="label reveal reveal-1" style="display:block;margin-bottom:14px;">Services</span>
+                <span class="label reveal reveal-1" style="display:block;margin-bottom:14px;">services</span>
                 <h1 class="reveal reveal-2" style="max-width:680px;">What we <span class="accent-word">build</span> for you.</h1>
-                <p class="hero-desc reveal reveal-3">From AI-powered apps to high-performance web platforms â€” we handle the full stack so you can focus on your business.</p>
+                <p class="hero-desc reveal reveal-3">From AI-powered apps to high-performance web platforms — we handle the full stack so you can focus on your business.</p>
             </div>
         </section>
 
@@ -93,7 +97,7 @@
                     <div class="service-card reveal reveal-1">
                         <div class="service-icon"><i data-lucide="layout-dashboard"></i></div>
                         <h3>UI/UX Design</h3>
-                        <p>Clean, functional interfaces designed for conversion and usability â€” from wireframe to pixel-perfect delivery.</p>
+                        <p>Clean, functional interfaces designed for conversion and usability — from wireframe to pixel-perfect delivery.</p>
                     </div>
                     <div class="service-card reveal reveal-2">
                         <div class="service-icon"><i data-lucide="shield-check"></i></div>
@@ -113,7 +117,7 @@
                     <span class="label" style="display:block;margin-bottom:14px;">Ready?</span>
                     <h2>Let's start building.</h2>
                     <p>Tell us what you're working on and we'll figure out the best path forward together.</p>
-                    <a href="contact.html" class="btn btn-primary btn-lg">Start a conversation</a>
+                    <a href="contact.html" class="btn btn-primary btn-lg">start a conversation</a>
                 </div>
             </div>
         </section>
@@ -123,27 +127,27 @@
         <div class="container">
             <div class="footer-inner">
                 <div>
-                    <div class="footer-brand"><img src="assets/logo.png" alt="VortexApps"> VortexApps</div>
-                    <div class="footer-copy">Â© 2025 VortexApps. Made in India.</div>
+                    <div class="footer-brand"><img src="assets/logo.png" alt="vortexapps"> vortexapps</div>
+                    <div class="footer-copy">© 2025 vortexapps. made in india.</div>
                 </div>
                 <div class="footer-links-group">
-                    <h4>Navigation</h4>
-                    <a href="index.html">Home</a><a href="about.html">About</a><a href="services.html">Services</a><a href="projects.html">Projects</a><a href="contact.html">Contact</a>
+                    <h4>navigation</h4>
+                    <a href="index.html">home</a><a href="about.html">about</a><a href="services.html">services</a><a href="projects.html">projects</a><a href="contact.html">contact</a>
                 </div>
                 <div class="footer-links-group">
-                    <h4>Connect</h4>
+                    <h4>connect</h4>
                     <a href="mailto:beatwave790@gmail.com">beatwave790@gmail.com</a>
                     <a href="https://discord.gg/spbuDTePSR" target="_blank" rel="noopener">Discord</a>
                     <a href="https://instagram.com/akshansh_6969" target="_blank" rel="noopener">Instagram</a>
                     <a href="https://support-akshansh.vercel.app" target="_blank" rel="noopener">Support us</a>
                 </div>
                 <div class="footer-links-group">
-                    <h4>Legal</h4>
-                    <a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms of Service</a>
+                    <h4>legal</h4>
+                    <a href="privacy.html">privacy policy</a><a href="terms.html">terms of service</a>
                 </div>
                 <div class="footer-links-group">
-                    <h4>Admin</h4>
-                    <a href="admin.html">Dashboard</a>
+                    <h4>admin</h4>
+                    <a href="admin.html">dashboard</a>
                 </div>
             </div>
         </div>

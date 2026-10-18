@@ -3,19 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin — VortexApps</title>
+    <title>Admin — vortexapps</title>
     <link rel="icon" type="image/png" href="assets/logo.png">
-    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="index.css?v=2">
+    <link rel="stylesheet" href="cosmic_refined.css?v=2">
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..700&family=Plus+Jakarta+Sans:wght@400..800&family=Space+Grotesk:wght@300..700&family=Spline+Sans:wght@300..700&family=IBM+Plex+Sans:wght@300..700&family=Geist+Mono:wght@100..900&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="config.js"></script>
-    <script src="index.js" defer></script>
+    <script src="index.js?v=2" defer></script>
 </head>
 <body>
     <div id="loading-screen">
-        <div class="ls-logo"><img src="assets/logo.png" alt="VortexApps"> VortexApps</div>
+        <div class="ls-logo"><img src="assets/logo.png" alt="vortexapps"> vortexapps</div>
         <div class="ls-spinner"></div>
     </div>
 
@@ -23,8 +27,8 @@
     <div id="admin-auth-panel" class="admin-auth-wrap active">
         <div class="admin-auth-card">
             <div class="admin-auth-logo">
-                <img src="assets/logo.png" alt="VortexApps">
-                VortexApps
+                <img src="assets/logo.png" alt="vortexapps">
+                vortexapps
             </div>
             <h1 class="admin-auth-title">Admin Console</h1>
             <p class="admin-auth-desc">Sign in to manage announcements, projects, and site settings.</p>
@@ -46,8 +50,8 @@
             <!-- SIDEBAR -->
             <aside class="admin-sidebar">
                 <div class="admin-sidebar-logo">
-                    <img src="assets/logo.png" alt="VortexApps">
-                    VortexApps
+                    <img src="assets/logo.png" alt="vortexapps">
+                    vortexapps
                 </div>
 
                 <nav class="admin-nav">
@@ -111,7 +115,7 @@
                                 <div class="admin-stat-num" id="admin-downloads-display">—</div>
                             </div>
                             <div class="admin-stat-card">
-                                <div class="admin-stat-label">Projects</div>
+                                <div class="admin-stat-label">projects</div>
                                 <div class="admin-stat-num" id="admin-projects-count">—</div>
                             </div>
                             <div class="admin-stat-card">
@@ -155,7 +159,7 @@
                 <div class="admin-tab" id="admin-tab-projects">
                     <div class="admin-topbar">
                         <div>
-                            <h1>Projects</h1>
+                            <h1>projects</h1>
                             <p>Manage the projects shown on the site</p>
                         </div>
                     </div>
@@ -292,7 +296,7 @@
                                 <div class="admin-input-group">
                                     <label class="admin-input-label">Maintenance message</label>
                                     <textarea class="admin-textarea" id="admin-maintenance-reason"
-                                        placeholder="VortexApps is currently undergoing scheduled maintenance. We'll be back shortly."
+                                        placeholder="vortexapps is currently undergoing scheduled maintenance. We'll be back shortly."
                                         rows="2"></textarea>
                                 </div>
                                 <button class="btn btn-secondary btn-sm" onclick="updateMaintenanceReason(document.getElementById('admin-maintenance-reason').value)">
