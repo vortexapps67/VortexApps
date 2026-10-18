@@ -1110,6 +1110,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     initializeRealtimeSync();
     checkAdminAuthSession();
     initCookieConsent();
+    initLenis();
 
     // Dismiss loading screen after exactly 1 second (700ms delay + 300ms fade out)
     setTimeout(dismissLoadingScreen, 700);
@@ -1151,6 +1152,28 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 });
 
+// --- LENIS SMOOTH SCROLL ---
+let lenis = null;
+function initLenis() {
+    try {
+        if (typeof Lenis === 'undefined') return;
+        lenis = new Lenis({
+            duration: 1.25,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            smoothWheel: true,
+            touchMultiplier: 1.4,
+        });
+        window.lenis = lenis; // exposed for debugging / third-party integration
+        const raf = (time) => {
+            lenis.raf(time);
+            requestAnimationFrame(raf);
+        };
+        requestAnimationFrame(raf);
+    } catch (e) {
+        lenis = null;
+    }
+}
+
 // --- SCROLL PROGRESS + BACK TO TOP ---
 (function() {
     const bar = document.getElementById('scroll-progress');
@@ -1169,7 +1192,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (!ticking) { ticking = true; requestAnimationFrame(update); }
     }, { passive: true });
     update();
-    if (btn) btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+    if (btn) btn.addEventListener('click', () => {
+        if (lenis) lenis.scrollTo(0, { duration: 1.25 });
+        else window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
 })();
 
 // --- HERO EYE GAZE — the pupil follows the cursor ---
